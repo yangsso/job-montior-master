@@ -9,4 +9,5 @@ import (
 func addAgentsRoutes(rg *gin.RouterGroup)  {
 	agents := rg.Group("/agents")
 	agents.GET("", controller.Find)
+	agents.POST("", controller.Register)
 }

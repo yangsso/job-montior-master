@@ -1,10 +1,24 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"job-master/data"
+	"job-master/model"
+	"job-master/service"
+	"net/http"
+)
 
 // 등록
-func register()  {
+func Register(c *gin.Context)  {
 	//agent server name
+	var agentRegisterModel model.AgentRegisterModel
+	if err := c.ShouldBindJSON(&agentRegisterModel); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	agent := data.Agent{Name: agentRegisterModel.Name, Host: agentRegisterModel.Host}
+	service.AddAgent(&agent)
 	//return enroll generate key (timeout)
 }
 
